@@ -44,7 +44,7 @@ This section focuses on designing an automated verification pipeline to scan con
 pip install -r requirements.txt
 streamlit run app.py
 
-## Re-building the database from scratch
+### Re-building the database from scratch
 ```bash
 import fingerprint as fp, pickle
 db = fp.build_database()   # expects songs_db/ folder with the 50 .mp3 files
