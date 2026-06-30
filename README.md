@@ -43,10 +43,25 @@ This section focuses on designing an automated verification pipeline to scan con
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
+```
 
 ### Re-building the database from scratch
-```bash
+```python
 import fingerprint as fp, pickle
 db = fp.build_database()   # expects songs_db/ folder with the 50 .mp3 files
 with open('database.pkl', 'wb') as f:
     pickle.dump(db, f)
+```
+The app auto-builds it on first run if `database.pkl` is missing and
+`fp.SONG_DIR` ("songs_db") is present (see `get_database()` in `app.py`).
+
+### Fingerprinting parameters (in `fingerprint.py`)
+| Parameter | Value | Meaning |
+|---|---|---|
+| `SR` | 22050 Hz | audio sample rate used throughout |
+| `NPERSEG` | 1024 | spectrogram FFT window length |
+| `NOVERLAP` | 512 | spectrogram window overlap |
+| `N_PEAKS` | 30 | max constellation peaks kept per time frame |
+| `FAN_OUT` | 10 | max pairs formed per anchor peak |
+| `DT_MIN`, `DT_MAX` | 1, 40 | allowed time-frame gap between paired peaks |
+| `DF_MAX` | 200 | allowed frequency-bin gap between paired peaks |
